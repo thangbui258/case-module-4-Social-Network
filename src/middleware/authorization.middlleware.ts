@@ -5,9 +5,11 @@ export class Auth{
     static async isAdmin(req,res,next){
 
         let accessToken=req.body.access_token;
+
+
         if(accessToken){
             //tien hanh giai ma
-            jwt.verify(accessToken,"123456789",(err,decoded)=>{
+            jwt.verify(accessToken,process.env.NUMBER_SECRET_TOKEN,(err,decoded)=>{
                 if(err){
                     return res.json({message:err.message})
                 }else {
