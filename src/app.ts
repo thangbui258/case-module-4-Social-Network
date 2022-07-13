@@ -27,3 +27,4 @@ app.get('/',(req,res)=>{
     res.render('./layout/layout')
 })
 app.listen(port)
+//fuck
