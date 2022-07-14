@@ -1,8 +1,6 @@
 import GoogleStrategy from "passport-google-oauth20"
 import passport from "passport"
 import {User} from "../schema/user.model";
-
-
 passport.serializeUser((user, done) => {
     done(null, user)
 });
@@ -37,9 +35,9 @@ passport.use(new GoogleStrategy({
 
                 let user = new User(data);
                 await user.save()
+
             }
-
-
+         request.session.accessToken=accessToken;
 
             return done(null, user)
         }catch (e) {

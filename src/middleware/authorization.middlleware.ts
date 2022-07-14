@@ -4,8 +4,7 @@ export class Auth{
 
     static async isAdmin(req,res,next){
 
-        let accessToken=req.body.access_token;
-
+        let accessToken= req.headers.cookie.cookie_user;
 
         if(accessToken){
             //tien hanh giai ma

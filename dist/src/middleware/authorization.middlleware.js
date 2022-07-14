@@ -7,9 +7,9 @@ exports.Auth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class Auth {
     static async isAdmin(req, res, next) {
-        let accessToken = req.body.access_token;
+        let accessToken = req.headers.cookie.cookie_user;
         if (accessToken) {
-            jsonwebtoken_1.default.verify(accessToken, "123456789", (err, decoded) => {
+            jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, (err, decoded) => {
                 if (err) {
                     return res.json({ message: err.message });
                 }

@@ -3,7 +3,8 @@ import bodyParser from "body-parser";
 import dotenv from 'dotenv';
 import  mongoose from "mongoose";
 import passport from "./src/middleware/passport.google"
-import userRoutes from "./src/routes/user.router"
+import authRoutes from "./src/routes/auth.router"
+import userRoutes from "./src/routes/user.router";
 import appRoot from "app-root-path";
 import errorToSlack from 'express-error-slack'
 import cors from "cors"
@@ -44,8 +45,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //cac router
-app.use("/auth",userRoutes);
-
+app.use("/auth",authRoutes);
+app.use('/user',userRoutes)
 
 
 

@@ -23,7 +23,7 @@ const userSchema = new mongoose_1.default.Schema({
     google_id: {
         type: String,
         default: 0
-    }
+    },
 });
 const User = mongoose_1.default.model("User", userSchema);
 exports.User = User;

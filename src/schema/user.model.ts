@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 
 const userSchema=new mongoose.Schema({
@@ -22,7 +22,8 @@ const userSchema=new mongoose.Schema({
     google_id:{
         type:String,
         default:0
-    }
+    },
+
 })
 
 

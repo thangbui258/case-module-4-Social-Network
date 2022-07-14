@@ -1,5 +1,5 @@
 export declare class UserController {
-    static login(req: any, res: any): Promise<any>;
-    static register(req: any, res: any): Promise<any>;
-    static createTokenAndSetCookie(req: any, res: any, payload: any): void;
+    showPagePerson(req: any, res: any): Promise<void>;
+    addStatus(req: any, res: any): Promise<void>;
+    takeNameUser(req: any, res: any, next: any): void;
 }
