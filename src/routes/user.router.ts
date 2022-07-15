@@ -1,18 +1,19 @@
 import {Router} from "express";
 import {UserController} from "../controller/user.controller";
 
-const userController = new UserController();
+
 const userRoutes = Router();
 
-userRoutes.get("/:username", (req, res) =>{
-    userController.showPagePerson(req,res)
-})
 
-userRoutes.post("/add/status",(req, res) =>{
-    userController.addStatus(req,res)
-})
+userRoutes.get("/:username",UserController.showPagePersonal)
 
-// userRoutes.get("/delete",(req,res)=>{
-//     console.log(req.query.id);
-// })
+userRoutes.post("/add/status",UserController.addStatus)
+
+userRoutes.get("/delete/:id",UserController.deleteStatus)
+
+
+userRoutes.get("/update/:id",UserController.updateStatus)
+userRoutes.post("/update",UserController.updateStatus)
+
+
 export default userRoutes

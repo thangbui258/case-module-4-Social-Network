@@ -30,7 +30,6 @@ export class AuthController {
 
                         // res.render("./user/admin")
                     }else{
-
                         res.render("./user/home",{user:payload})
                     }
                 } else {

@@ -269,25 +269,27 @@
                                 <h6>TITLE</h6>
                                  <form action="/user/add/status" method="post">
                                      <p><input name="content" type="textarea" placeholder="ban dang nghi gi?"></p>
-                                     <p><input name="ID" hidden type="textarea" value="<%=data.idUser%>"></p>
+
+
+                                     <p><input name="ID" hidden type="textarea" value="<%=data.statuses[0].user%>"></p>
+
                                      <p>
                                          <button type="submit">them</button></p>
                                  </form>
 
 
-                                    <%for (let i=data.statuses.length-1;i>0;i--){%>
+                                   <%for (let i=data.statuses.length-1;i>0;i--){%>
                                     <div>
                                         <p>
                                            <%=data.statuses[i].content%>
-                                          <a href="/user/delete?id=<%=data.statuses[i].content%>">delete</a>
+                                          <a href="/user/delete/<%=data.statuses[i]._id%>">delete</a>
+                                          <a href="/user/update/<%=data.statuses[i]._id%>">update</a>
+
                                         </p>
                                     </div>
 
-
                                     <%}%>
-                                    <p>
 
-                                    </p>
 
 
 
