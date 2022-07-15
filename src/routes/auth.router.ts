@@ -4,6 +4,7 @@ const router = express.Router();
 import {Auth} from "../middleware/authorization.middlleware"
 import wrapperError from "../containsError/error"
 import {AuthController} from "../controller/auth.controller"
+import {UserController} from "../controller/user.controller";
 
 
 // router.use("/",Auth.isAdmin)
@@ -11,8 +12,9 @@ import {AuthController} from "../controller/auth.controller"
 
 router.get('/login',wrapperError(AuthController.login ))
 
-router.post("/login", wrapperError(AuthController.login ));
-
+router.get("/home", wrapperError(AuthController.home ));
+router.post("/home", wrapperError(AuthController.home ));
+router.post('/add/statusHome',wrapperError(UserController.addStatusHome))
 
 
 

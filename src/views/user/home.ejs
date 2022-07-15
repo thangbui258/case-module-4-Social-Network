@@ -157,7 +157,7 @@
                 </div>
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item d-flex align-items-center">
-                        <a href="/user/<%=user.username%>" class="nav-link text-body font-weight-bold px-0">
+                        <a href="/user/<%=data.payload.username%>" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Trang ca nhan</span>
                         </a>
@@ -266,17 +266,27 @@
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                <h6>TITLE</h6>
-                                <p class="text-sm mb-0">
-                                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                    <span class="font-weight-bold ms-1">CONTENT</span> this month
-                                </p>
+                                <form action="/auth/add/statusHome" method="post">
+                                    <p><input name="content" type="textarea" placeholder="ban dang nghi gi?"></p>
+
+                                    <p><input name="ID" type="textarea" value="<%=data.payload.user_id%>"></p>
+
+                                    <p>
+                                        <button type="submit">them</button></p>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <p>sdfiosdhfiosdhiofds</p>
+                <%for (let i=data.statuses.length-1;i>0;i--){%>
+                <div>
+                    <p>
+                        <%=data.statuses[i].content%>
+                    </p>
+                </div>
+                <%}%>
+
 
             </div>
             <div class="col-lg-4 col-md-6">

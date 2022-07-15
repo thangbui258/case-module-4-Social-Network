@@ -16,4 +16,5 @@ userRoutes.get("/update/:id",UserController.updateStatus)
 userRoutes.post("/update",UserController.updateStatus)
 
 
+
 export default userRoutes

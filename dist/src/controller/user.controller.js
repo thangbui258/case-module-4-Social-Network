@@ -10,9 +10,9 @@ const user_model_1 = require("../schema/user.model");
 class UserController {
     static async showPagePersonal(req, res) {
         let user = await user_model_1.User.findOne({ username: req.params.username });
+        console.log(user);
         const idUser = user._id;
         const statuses = await status_model_1.Status.find({ user: idUser });
-        console.log(statuses);
         let status = {
             statuses: statuses
         };
@@ -20,7 +20,6 @@ class UserController {
     }
     static async addStatus(req, res) {
         const userID = req.body.ID;
-        console.log(userID);
         const userSelect = await user_model_1.User.find({ _id: userID });
         const statusNew = new status_model_1.Status({
             content: req.body.content,
@@ -28,6 +27,16 @@ class UserController {
         });
         await statusNew.save();
         res.redirect(`/user/${userSelect[0].username}`);
+    }
+    static async addStatusHome(req, res) {
+        const userID = req.body.ID;
+        const userSelect = await user_model_1.User.find({ _id: userID });
+        const statusNew = new status_model_1.Status({
+            content: req.body.content,
+            user: userSelect[0]
+        });
+        await statusNew.save();
+        res.redirect('/auth/home');
     }
     static async deleteStatus(req, res) {
         let status = await status_model_1.Status.findOne({ _id: req.params.id });
@@ -51,6 +60,7 @@ class UserController {
             res.render('./user/updateStatus', { data: data });
         }
         else {
+            console.log(req.body);
             let userUpdateStatus = req.body.userUpdate;
             let idStatusUpdate = req.body.idStatus;
             let contentStatusUpdate = req.body.statusUpdate;
