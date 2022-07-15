@@ -17,6 +17,10 @@ const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const port = 3000;
 const app = (0, express_1.default)();
+const http_1 = __importDefault(require("http"));
+const server = http_1.default.createServer(app);
+const socket_io_1 = require("socket.io");
+const io = new socket_io_1.Server(server);
 app.set('view engine', 'ejs');
 app.set("views", './src/views');
 dotenv_1.default.config();
@@ -39,13 +43,16 @@ app.use(passport_google_1.default.initialize());
 app.use(passport_google_1.default.session());
 app.use("/auth", auth_router_1.default);
 app.use('/user', user_router_1.default);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
 app.use((0, express_error_slack_1.default)({ webhookUri: "https://hooks.slack.com/services/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" }));
 app.use((err, req, res, next) => {
     if (err) {
         res.json({ message: err });
     }
 });
-app.listen(port, () => {
+server.listen(port, () => {
     console.log("http://localhost:" + port);
 });
 //# sourceMappingURL=index.js.map

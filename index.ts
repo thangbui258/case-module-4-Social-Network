@@ -12,9 +12,15 @@ import path from "path";
 import session from "express-session";
 
 
+
 const port =3000;
 
 const app = express();
+import http from 'http';
+const server = http.createServer(app);
+import { Server } from "socket.io";
+const io = new Server(server);
+
 
 //set view engine
 app.set('view engine', 'ejs');
@@ -48,6 +54,10 @@ app.use(passport.session());
 app.use("/auth",authRoutes);
 app.use('/user',userRoutes)
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
 
 
 
@@ -60,8 +70,9 @@ app.use((err, req, res,next) => {
 })
 
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log("http://localhost:"+port)
 })
+
 
 

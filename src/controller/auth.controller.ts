@@ -7,6 +7,7 @@ import {Status} from "../schema/status.model";
 export class AuthController {
 
     static async login(req, res) {
+        res.cookie("cookie_user", '')
         return res.render('./user/login')
     }
 
@@ -21,12 +22,13 @@ export class AuthController {
                         return res.json({message: err.message})
                     } else {
                         let payload = decoded;
+                        const listUser = await User.find();
                         const statuses = await Status.find()
                         let data = {
                             payload: payload,
-                            statuses: statuses
+                            statuses: statuses,
+                            listUser: listUser
                         }
-                        console.log(data.payload)
                         res.render("./user/home", {data: data})
                     }
                 })
@@ -54,10 +56,12 @@ export class AuthController {
                     // res.json('./user/',{user:payload})
                     // res.render("./user/admin")
                 } else {
+                    const listUser = await User.find();
                     const statuses = await Status.find()
                     let data = {
                         payload: payload,
-                        statuses: statuses
+                        statuses: statuses,
+                        listUser:listUser
                     }
                     res.render("./user/home", {data: data})
                 }
@@ -97,7 +101,6 @@ export class AuthController {
         const token = jwt.sign(payload, process.env.NUMBER_SECRET_TOKEN, {expiresIn: 9999});
         res.cookie("cookie_user", token)
     }
-
 
 }
 

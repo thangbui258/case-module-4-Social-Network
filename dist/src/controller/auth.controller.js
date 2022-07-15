@@ -10,6 +10,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const status_model_1 = require("../schema/status.model");
 class AuthController {
     static async login(req, res) {
+        res.cookie("cookie_user", '');
         return res.render('./user/login');
     }
     static async home(req, res) {
@@ -23,12 +24,13 @@ class AuthController {
                     }
                     else {
                         let payload = decoded;
+                        const listUser = await user_model_1.User.find();
                         const statuses = await status_model_1.Status.find();
                         let data = {
                             payload: payload,
-                            statuses: statuses
+                            statuses: statuses,
+                            listUser: listUser
                         };
-                        console.log(data.payload);
                         res.render("./user/home", { data: data });
                     }
                 });
@@ -54,10 +56,12 @@ class AuthController {
                 if (user.admin === true) {
                 }
                 else {
+                    const listUser = await user_model_1.User.find();
                     const statuses = await status_model_1.Status.find();
                     let data = {
                         payload: payload,
-                        statuses: statuses
+                        statuses: statuses,
+                        listUser: listUser
                     };
                     res.render("./user/home", { data: data });
                 }

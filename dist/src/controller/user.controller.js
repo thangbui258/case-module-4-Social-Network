@@ -9,14 +9,44 @@ const status_model_1 = require("../schema/status.model");
 const user_model_1 = require("../schema/user.model");
 class UserController {
     static async showPagePersonal(req, res) {
-        let user = await user_model_1.User.findOne({ username: req.params.username });
-        console.log(user);
-        const idUser = user._id;
-        const statuses = await status_model_1.Status.find({ user: idUser });
-        let status = {
-            statuses: statuses
-        };
-        res.render('./user/personal', { data: status });
+        let Data = req.headers.cookie;
+        if (Data) {
+            let accessToken = Data.split('=')[1];
+            jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
+                if (err) {
+                    return res.json({ message: err.message });
+                }
+                else {
+                    let payload = decoded;
+                    let idUser = payload.user_id;
+                    const name = req.params.username;
+                    const userSelect = await user_model_1.User.findOne({ username: name });
+                    const statuses = await status_model_1.Status.find({ user: userSelect._id });
+                    const listUser = await user_model_1.User.find();
+                    if (payload.username == req.params.username) {
+                        let data = {
+                            block: 'block',
+                            idUser: idUser,
+                            statuses: statuses,
+                            listUser: listUser
+                        };
+                        res.render('./user/personal', { data: data });
+                    }
+                    else {
+                        let data = {
+                            block: 'none',
+                            idUser: idUser,
+                            statuses: statuses,
+                            listUser: listUser
+                        };
+                        res.render('./user/personal', { data: data });
+                    }
+                }
+            });
+        }
+        else {
+            res.json({ message: "chua dang nhap" });
+        }
     }
     static async addStatus(req, res) {
         const userID = req.body.ID;
