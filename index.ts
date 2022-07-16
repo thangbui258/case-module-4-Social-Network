@@ -26,7 +26,7 @@ const io = new Server(server);
 app.set('view engine', 'ejs');
 app.set("views",'./src/views')
 
-//cau hinh bien moi truong + connect DB
+//cau hinh bien moi truong + connect DB + test thang nguyen edit
 dotenv.config()
 mongoose.connect(process.env.MONGODB_URL,()=>{
     console.log("connect success")
