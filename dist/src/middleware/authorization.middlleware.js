@@ -27,15 +27,6 @@ class Auth {
             return res.json({ message: "no access token" });
         }
     }
-    static async ownerPage(req, res, next) {
-        let accessToken = req.headers.cookie.cookie_user;
-        if (accessToken) {
-            next();
-        }
-        else {
-            return res.json({ message: "no access token" });
-        }
-    }
 }
 exports.Auth = Auth;
 //# sourceMappingURL=authorization.middlleware.js.map

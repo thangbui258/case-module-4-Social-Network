@@ -1,39 +1,38 @@
 import express from "express";
 import passport from "passport"
+
 const router = express.Router();
 import {Auth} from "../middleware/authorization.middlleware"
 import wrapperError from "../containsError/error"
 import {AuthController} from "../controller/auth.controller"
 import {UserController} from "../controller/user.controller";
-
+import {CheckLogin} from "../middleware/checkLogin";
 
 // router.use("/",Auth.isAdmin)
 
 
-router.get('/login',wrapperError(AuthController.login ))
-
-router.get("/home", wrapperError(AuthController.home ));
-router.post("/home", wrapperError(AuthController.home ));
-router.post('/add/statusHome',wrapperError(UserController.addStatusHome))
+router.get('/login', wrapperError(AuthController.login))
 
 
-
-router.get('/register', wrapperError(AuthController.register ))
-
-router.post("/register",  wrapperError(AuthController.register ));
-
-
-router.get('/google',passport.authenticate('google', { scope: ['profile'] }));
-
-router.get('/google/callback',passport.authenticate('google', { failureRedirect: '/login' }),
-    async function(req, res) {
-
-          // await AuthController.createTokenAndSetCookie(req,res,)
+router.post('/login', wrapperError(CheckLogin.checkUserOrAdminToDirectional))
+router.get('/user', wrapperError(UserController.homeUser))
+router.get('/admin', wrapperError(UserController.homeAdmin))
 
 
-         res.render('./user/user')
+router.get('/logout', wrapperError(AuthController.logout))
+
+
+router.get('/register', wrapperError(AuthController.register))
+router.post("/register", wrapperError(AuthController.register));
+
+
+router.get('/google', passport.authenticate('google', {scope: ['profile']}));
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/auth/login'}),
+    async function (req, res) {
+        // await AuthController.createTokenAndSetCookie(req,res,)
+
+        res.redirect('/auth/home')
     });
-
 
 
 export default router

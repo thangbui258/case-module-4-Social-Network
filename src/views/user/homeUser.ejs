@@ -36,6 +36,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -57,7 +59,7 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
+                    <span class="nav-link-text ms-1">Home</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -112,7 +114,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="/auth/login">
+                <a class="nav-link text-white " href="/auth/logout">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
                     </div>
@@ -268,7 +270,7 @@
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                <form action="/auth/add/statusHome" method="post">
+                                <form action="/user/add/status-home" method="post">
                                     <p><input name="content" type="textarea" placeholder="ban dang nghi gi?"></p>
 
                                     <p><input name="ID" hidden type="textarea" value="<%=data.payload.user_id%>"></p>
@@ -283,9 +285,14 @@
 
                 <%for (let i=data.statuses.length-1;i>=0;i--){%>
                 <div>
-                    <p>
+                    <ul>
+
                         <%=data.statuses[i].content%>
-                    </p>
+                       <button class="btn-like" id_status="<%=data.statuses[i]._id%>"   >
+                       <%=data.statuses[i].like%>
+                       </button>
+
+                    </ul>
                 </div>
                 <%}%>
 
@@ -332,8 +339,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Send message</button>
+                                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                                    <button type="button" class="send btn btn-primary">Send message</button>
                                 </div>
                             </div>
                         </div>
@@ -737,5 +744,33 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io();
+
+    let btnLikes=document.querySelectorAll('.btn-like')
+
+    btnLikes.forEach(btnLike=>{
+        btnLike.addEventListener('click',()=>{
+            let idStatus=btnLike.getAttribute('id_status')
+            let numberLike=btnLike.innerText;
+            let Like={
+                idStatus:idStatus,
+                numberLike:numberLike
+            }
+            socket.emit('like',Like)
+
+        })
+    })
+
+
+    socket.on('updateLike',Status=>{
+         btnLikes.forEach(btnLike=>{
+             let idStatus=btnLike.getAttribute('id_status')
+             if(Status.idStatus===idStatus){
+              btnLike.innerText=Status.numberLike
+             }
+         })
+
+    })
+
+
 </script>
 </html>

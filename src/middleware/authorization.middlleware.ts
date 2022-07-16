@@ -25,18 +25,6 @@ export class Auth{
 
     }
 
-    static async ownerPage(req,res,next){
-        let accessToken= req.headers.cookie.cookie_user;
-        if(accessToken){
-           next()
-        }else {
-            return  res.json({message:"no access token"})
-        }
-    }
-
-
-
-
 
 
 }

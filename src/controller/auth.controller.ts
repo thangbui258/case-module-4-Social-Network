@@ -3,79 +3,38 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser"
 import {Status} from "../schema/status.model";
-
+import cookie from "cookie"
 export class AuthController {
 
     static async login(req, res) {
-        res.cookie("cookie_user", '')
-        return res.render('./user/login')
-    }
 
-    static async home(req, res) {
-        if (req.method === "GET") {
-            let data = req.headers.cookie
-            if (data) {
-                let accessToken = data.split('=')[1]
-
-                jwt.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
-                    if (err) {
-                        return res.json({message: err.message})
-                    } else {
-                        let payload = decoded;
-                        const listUser = await User.find();
-                        const statuses = await Status.find()
-                        let data = {
-                            payload: payload,
-                            statuses: statuses,
-                            listUser: listUser
-                        }
-                        res.render("./user/home", {data: data})
+        let cookieClient=cookie.parse(req.headers.cookie||'')
+        if(cookieClient.cookie_user){
+            jwt.verify(cookieClient.cookie_user,process.env.NUMBER_SECRET_TOKEN,(err,decoded)=>{
+                if(err){
+                    return res.json({message:err.message})
+                }else {
+                    if(decoded.admin===true){
+                       res.redirect('/auth/admin')
+                    }else {
+                        res.redirect('/auth/user')
                     }
-                })
-            } else {
-                res.json({message: "chua dang nhap"})
-            }
-
-        } else {
-            const user = await User.findOne({username: req.body.username});
-            if (user) {
-                const comparePass = await bcrypt.compare(req.body.password, user.password);
-                if (!comparePass) {
-                    return res.json({code: 404, message: "password wrong",});
                 }
-                let payload = {
-                    user_id: user.id,
-                    username: user.username,
-                    admin: user.admin,
-                    google_id: user.google_id
-                }
-
-                await AuthController.createTokenAndSetCookie(req, res, payload)
-
-                if (user.admin === true) {
-                    // res.json('./user/',{user:payload})
-                    // res.render("./user/admin")
-                } else {
-                    const listUser = await User.find();
-                    const statuses = await Status.find()
-                    let data = {
-                        payload: payload,
-                        statuses: statuses,
-                        listUser:listUser
-                    }
-                    res.render("./user/home", {data: data})
-                }
-            } else {
-                return res.json({err: 'wrong user'});
-            }
+            })
         }
-
+       await res.render('./user/login',{display:"none"})
     }
+
+    static async logout(req, res) {
+        res.cookie("cookie_user", '')
+        return res.render('./user/login',{display:'none'})
+    }
+
 
 
     static async register(req, res) {
         if (req.method === 'GET') {
-            return res.render('./user/register')
+            return res.render('./user/register',{display:'none'})
         } else {
             const user = await User.findOne({username: req.body.username});
             if (!user) {
@@ -86,16 +45,15 @@ export class AuthController {
                     let userData = {username: req.body.username, password: passwordHash}
                     const newUser = await User.create(userData);
                     // res.json({user: newUser, code: 200})
-                    return res.render('./user/login')
+                    return res.render('./user/login',{display:'block'})
                 } else {
-                    res.json({message: "mat khau khong khop"})
+                    res.render('./user/register',{display:'block'})
                 }
             } else {
                 res.json({err: "User exited"})
             }
         }
     }
-
 
     static createTokenAndSetCookie(req, res, payload) {
         const token = jwt.sign(payload, process.env.NUMBER_SECRET_TOKEN, {expiresIn: 9999});

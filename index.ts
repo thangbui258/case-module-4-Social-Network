@@ -13,12 +13,13 @@ import session from "express-session";
 
 
 
-const port =5000;
+const port =3000;
 
 const app = express();
 import http from 'http';
 const server = http.createServer(app);
 import { Server } from "socket.io";
+import {Status} from "./src/schema/status.model";
 const io = new Server(server);
 
 
@@ -52,12 +53,43 @@ app.use(passport.session());
 
 //cac router
 app.use("/auth",authRoutes);
+
 app.use('/user',userRoutes)
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
 
+io.on('connection', (socket) => {
+
+socket.on('like',async Datalike=>{
+
+    await Status.updateOne({_id:Datalike.idStatus},{like:(+Datalike.numberLike+1)});
+
+    let StatusLike=await Status.findOne({_id:Datalike.idStatus})
+
+    socket.emit('updateLike',{
+        idStatus:Datalike.idStatus,
+        numberLike:StatusLike.like
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
 
 
 

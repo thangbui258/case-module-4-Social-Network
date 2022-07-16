@@ -20,6 +20,7 @@ const app = (0, express_1.default)();
 const http_1 = __importDefault(require("http"));
 const server = http_1.default.createServer(app);
 const socket_io_1 = require("socket.io");
+const status_model_1 = require("./src/schema/status.model");
 const io = new socket_io_1.Server(server);
 app.set('view engine', 'ejs');
 app.set("views", './src/views');
@@ -44,7 +45,14 @@ app.use(passport_google_1.default.session());
 app.use("/auth", auth_router_1.default);
 app.use('/user', user_router_1.default);
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    socket.on('like', async (Datalike) => {
+        await status_model_1.Status.updateOne({ _id: Datalike.idStatus }, { like: (+Datalike.numberLike + 1) });
+        let StatusLike = await status_model_1.Status.findOne({ _id: Datalike.idStatus });
+        socket.emit('updateLike', {
+            idStatus: Datalike.idStatus,
+            numberLike: StatusLike.like
+        });
+    });
 });
 app.use((0, express_error_slack_1.default)({ webhookUri: "https://hooks.slack.com/services/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" }));
 app.use((err, req, res, next) => {

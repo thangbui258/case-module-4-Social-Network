@@ -34,7 +34,6 @@ passport_1.default.use(new passport_google_oauth20_1.default({
             let user = new user_model_1.User(data);
             await user.save();
         }
-        request.session.accessToken = accessToken;
         return done(null, user);
     }
     catch (e) {

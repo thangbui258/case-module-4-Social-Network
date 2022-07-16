@@ -1,8 +1,10 @@
 export declare class UserController {
-    static showPagePersonal(req: any, res: any): Promise<void>;
-    static addStatus(req: any, res: any): Promise<void>;
-    static addStatusHome(req: any, res: any): Promise<void>;
-    static deleteStatus(req: any, res: any): Promise<void>;
-    static updateStatus(req: any, res: any): Promise<void>;
+    static homeUser(req: any, res: any): Promise<void>;
+    static homeAdmin(req: any, res: any): Promise<void>;
+    static PersonalUser(req: any, res: any): Promise<void>;
+    static addStatusInPersonal(req: any, res: any): Promise<void>;
+    static addStatusInHome(req: any, res: any): Promise<void>;
+    static deleteStatusInPersonal(req: any, res: any): Promise<void>;
+    static updateStatusInPersonal(req: any, res: any): Promise<void>;
     static takeNameUser(req: any, res: any, next: any): void;
 }

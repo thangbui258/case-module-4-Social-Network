@@ -57,11 +57,11 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white active bg-gradient-primary" href="../pages/dashboard.html">
+                <a class="nav-link text-white active bg-gradient-primary" href="/auth/user">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
+                    <span class="nav-link-text ms-1">Home</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -154,7 +154,7 @@
                     </li>
                     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
                 </ol>
-                <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+                <h6 class="font-weight-bolder mb-0">Home</h6>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -282,7 +282,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-7">
 
-                                <form style="display: <%= data.block %>" action="/user/add/status" method="post">
+                                <form style="display: <%= data.block %>" action="/user/add/status-personal" method="post">
                                     <p><input name="content" type="textarea" placeholder="ban dang nghi gi?"></p>
                                     <p><input name="ID" hidden type="textarea" value="<%= data.idUser %>"></p>
 
@@ -292,12 +292,16 @@
                                 </form>
                                 <% for (let i = data.statuses.length - 1;i >= 0;i--){ %>
                                     <div>
-                                        <p>
+                                        <tr>
                                             <%= data.statuses[i].content %>
-                                            <a href="/user/delete/<%= data.statuses[i]._id %>">delete</a>
-                                            <a href="/user/update/<%= data.statuses[i]._id %>">update</a>
 
-                                        </p>
+                       <button class="btn-like" id_status="<%=data.statuses[i]._id%>">
+                       <%=data.statuses[i].like%>
+                       </button>
+                                            <a href="/user/delete/<%= data.statuses[i]._id %>" style="display: <%= data.block %>" >delete</a>
+                                            <a href="/user/update/<%= data.statuses[i]._id %>"  style="display: <%= data.block %>">update</a>
+                                        </tr>
+
                                     </div>
                                 <% } %>
                             </div>
@@ -775,5 +779,34 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io();
+
+     let btnLikes=document.querySelectorAll('.btn-like')
+
+    btnLikes.forEach(btnLike=>{
+        btnLike.addEventListener('click',()=>{
+            let idStatus=btnLike.getAttribute('id_status')
+            let numberLike=btnLike.innerText;
+            let Like={
+                idStatus:idStatus,
+                numberLike:numberLike
+            }
+            socket.emit('like',Like)
+
+        })
+    })
+
+
+    socket.on('updateLike',Status=>{
+         btnLikes.forEach(btnLike=>{
+             let idStatus=btnLike.getAttribute('id_status')
+             if(Status.idStatus===idStatus){
+              btnLike.innerText=Status.numberLike
+             }
+         })
+
+    })
+
+
+
 </script>
 </html>

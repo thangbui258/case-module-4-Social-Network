@@ -7,73 +7,34 @@ exports.AuthController = void 0;
 const user_model_1 = require("../schema/user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const status_model_1 = require("../schema/status.model");
+const cookie_1 = __importDefault(require("cookie"));
 class AuthController {
     static async login(req, res) {
-        res.cookie("cookie_user", '');
-        return res.render('./user/login');
-    }
-    static async home(req, res) {
-        if (req.method === "GET") {
-            let data = req.headers.cookie;
-            if (data) {
-                let accessToken = data.split('=')[1];
-                jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
-                    if (err) {
-                        return res.json({ message: err.message });
-                    }
-                    else {
-                        let payload = decoded;
-                        const listUser = await user_model_1.User.find();
-                        const statuses = await status_model_1.Status.find();
-                        let data = {
-                            payload: payload,
-                            statuses: statuses,
-                            listUser: listUser
-                        };
-                        res.render("./user/home", { data: data });
-                    }
-                });
-            }
-            else {
-                res.json({ message: "chua dang nhap" });
-            }
-        }
-        else {
-            const user = await user_model_1.User.findOne({ username: req.body.username });
-            if (user) {
-                const comparePass = await bcrypt_1.default.compare(req.body.password, user.password);
-                if (!comparePass) {
-                    return res.json({ code: 404, message: "password wrong", });
-                }
-                let payload = {
-                    user_id: user.id,
-                    username: user.username,
-                    admin: user.admin,
-                    google_id: user.google_id
-                };
-                await AuthController.createTokenAndSetCookie(req, res, payload);
-                if (user.admin === true) {
+        let cookieClient = cookie_1.default.parse(req.headers.cookie || '');
+        if (cookieClient.cookie_user) {
+            jsonwebtoken_1.default.verify(cookieClient.cookie_user, process.env.NUMBER_SECRET_TOKEN, (err, decoded) => {
+                if (err) {
+                    return res.json({ message: err.message });
                 }
                 else {
-                    const listUser = await user_model_1.User.find();
-                    const statuses = await status_model_1.Status.find();
-                    let data = {
-                        payload: payload,
-                        statuses: statuses,
-                        listUser: listUser
-                    };
-                    res.render("./user/home", { data: data });
+                    if (decoded.admin === true) {
+                        res.redirect('/auth/admin');
+                    }
+                    else {
+                        res.redirect('/auth/user');
+                    }
                 }
-            }
-            else {
-                return res.json({ err: 'wrong user' });
-            }
+            });
         }
+        await res.render('./user/login', { display: "none" });
+    }
+    static async logout(req, res) {
+        res.cookie("cookie_user", '');
+        return res.render('./user/login', { display: 'none' });
     }
     static async register(req, res) {
         if (req.method === 'GET') {
-            return res.render('./user/register');
+            return res.render('./user/register', { display: 'none' });
         }
         else {
             const user = await user_model_1.User.findOne({ username: req.body.username });
@@ -83,10 +44,10 @@ class AuthController {
                     const passwordHash = await bcrypt_1.default.hash(req.body.password[0], 10);
                     let userData = { username: req.body.username, password: passwordHash };
                     const newUser = await user_model_1.User.create(userData);
-                    return res.render('./user/login');
+                    return res.render('./user/login', { display: 'block' });
                 }
                 else {
-                    res.json({ message: "mat khau khong khop" });
+                    res.render('./user/register', { display: 'block' });
                 }
             }
             else {

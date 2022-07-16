@@ -14,7 +14,6 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-
 passport.use(new GoogleStrategy({
         clientID:'262351243087-59viarrbs51fnvj2ih5uonlrdics739g.apps.googleusercontent.com',
         clientSecret: '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',
@@ -26,19 +25,15 @@ passport.use(new GoogleStrategy({
             let user = await User.findOne({
                 google_id: profile.id
             })
-
             if (!user) {
                 let data = {
                     username: profile.displayName,
                     google_id: profile.id
                 }
-
                 let user = new User(data);
                 await user.save()
 
             }
-         request.session.accessToken=accessToken;
-
             return done(null, user)
         }catch (e) {
             return done(null, false)

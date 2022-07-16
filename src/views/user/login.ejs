@@ -74,7 +74,8 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" action="/auth/home" method="post">
+                <form role="form" class="text-start" action="/auth/login" method="POST">
+                  <p style="color:#d0235e ;display:<%=display%> ">Register Success ,Please Login</p>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="username">
@@ -92,7 +93,7 @@
                   </div>
                   <p class="mt-4 text-sm text-center">
                     Don't have an account?
-                    <a href="/user/register" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                    <a href="/auth/register" class="text-primary text-gradient font-weight-bold">Sign up</a>
                   </p>
                 </form>
 
