@@ -37,12 +37,16 @@ export class UserController {
                     return res.json({message: err.message})
                 } else {
                     let payload = decoded;
+                    const nameAdmin=payload.username
+
                     const listUser = await User.find({username:{$nin:[`${decoded.username}`]}});
+
                     const statuses = await Status.find()
                     let data = {
                         payload: payload,
                         statuses: statuses,
-                        listUser: listUser
+                        listUser: listUser,
+                        nameAdmin:nameAdmin
                     }
                     res.render("./user/homeAdmin", {data: data})
                 }
@@ -154,16 +158,9 @@ export class UserController {
     }
 
 
-    static takeNameUser(req, res, next) {
-        let accessToken = req.headers.cookie.cooki_user
-        jwt.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, (err, decoded) => {
-            if (err) {
-                return res.json({message: err.message})
-            } else {
-                let name = decoded.username
-                next();
-            }
-        })
-    }
+   static async deleteUser(req,res) {
+           await User.deleteOne({username:req.params.username })
+           res.redirect('/auth/admin')
+   }
 
 }

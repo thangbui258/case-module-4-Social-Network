@@ -6,5 +6,5 @@ export declare class UserController {
     static addStatusInHome(req: any, res: any): Promise<void>;
     static deleteStatusInPersonal(req: any, res: any): Promise<void>;
     static updateStatusInPersonal(req: any, res: any): Promise<void>;
-    static takeNameUser(req: any, res: any, next: any): void;
+    static deleteUser(req: any, res: any): Promise<void>;
 }

@@ -55,6 +55,14 @@ export class AuthController {
         }
     }
 
+    static async grantAdminOrUser(req, res) {
+
+     await User.updateOne({username:req.body.nameUser},{admin:req.body.Admin})
+
+      res.redirect('/auth/admin')
+
+    }
+
     static createTokenAndSetCookie(req, res, payload) {
         const token = jwt.sign(payload, process.env.NUMBER_SECRET_TOKEN, {expiresIn: 9999});
         res.cookie("cookie_user", token)

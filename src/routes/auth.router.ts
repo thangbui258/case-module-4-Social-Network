@@ -11,12 +11,13 @@ import {CheckLogin} from "../middleware/checkLogin";
 // router.use("/",Auth.isAdmin)
 
 
-router.get('/login', wrapperError(AuthController.login))
+router.get('/', wrapperError(AuthController.login))
 
 
 router.post('/login', wrapperError(CheckLogin.checkUserOrAdminToDirectional))
 router.get('/user', wrapperError(UserController.homeUser))
 router.get('/admin', wrapperError(UserController.homeAdmin))
+router.get('/admin/delete/:username', wrapperError(UserController.deleteUser))
 
 
 router.get('/logout', wrapperError(AuthController.logout))
@@ -24,6 +25,8 @@ router.get('/logout', wrapperError(AuthController.logout))
 
 router.get('/register', wrapperError(AuthController.register))
 router.post("/register", wrapperError(AuthController.register));
+
+router.post('/admin/grant',wrapperError(AuthController.grantAdminOrUser))
 
 
 router.get('/google', passport.authenticate('google', {scope: ['profile']}));
