@@ -55,6 +55,10 @@ class AuthController {
             }
         }
     }
+    static async grantAdminOrUser(req, res) {
+        await user_model_1.User.updateOne({ username: req.body.nameUser }, { admin: req.body.Admin });
+        res.redirect('/auth/admin');
+    }
     static createTokenAndSetCookie(req, res, payload) {
         const token = jsonwebtoken_1.default.sign(payload, process.env.NUMBER_SECRET_TOKEN, { expiresIn: 9999 });
         res.cookie("cookie_user", token);

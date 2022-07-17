@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import  mongoose from "mongoose";
 import passport from "./src/middleware/passport.google"
 import authRoutes from "./src/routes/auth.router"
+import startRoutes from "./src/routes/auth.router"
 import userRoutes from "./src/routes/user.router";
 import appRoot from "app-root-path";
 import errorToSlack from 'express-error-slack'
@@ -52,6 +53,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //cac router
+
+app.use("/",startRoutes);
 app.use("/auth",authRoutes);
 
 app.use('/user',userRoutes)

@@ -1,2 +1,42 @@
 
 <h1>ADMIN</h1>
+
+<h3>NameAdmin: <%= data.nameAdmin%> </h3>
+
+    <form action="">
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Admin</th>
+                <th>Action</th>
+            </thead>
+
+            <tbody>
+
+            <% data.listUser.forEach( item=>{ %>
+                <form action="/auth/admin/grant" method="POST">
+                    <input hidden name="nameUser" value="<%= item.username %>">
+                <tr>
+                    <td><%= item.username %></td>
+                    <td>
+                        <select id="Admin" name="Admin">
+                            <option value="Choose" selected >Choose</option>
+                            <option value="false" >User</option>
+                            <option value="true" >Admin</option>
+                        </select>
+                    </td>
+                    <td>
+                       <button><a href="/auth/admin/delete/<%=item.username%>">Delete</a></button>
+                        <button type="submit" class="btn-like" name="<%= item.username %>">submit</button>
+                    </td>
+                </tr>
+
+                </form>
+            <% }) %>
+
+            </tbody>
+        </table>
+
+    </form>
+
+<a href="/auth/logout">Log Out </a>

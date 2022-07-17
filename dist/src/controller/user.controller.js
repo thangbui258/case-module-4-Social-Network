@@ -43,12 +43,14 @@ class UserController {
                 }
                 else {
                     let payload = decoded;
+                    const nameAdmin = payload.username;
                     const listUser = await user_model_1.User.find({ username: { $nin: [`${decoded.username}`] } });
                     const statuses = await status_model_1.Status.find();
                     let data = {
                         payload: payload,
                         statuses: statuses,
-                        listUser: listUser
+                        listUser: listUser,
+                        nameAdmin: nameAdmin
                     };
                     res.render("./user/homeAdmin", { data: data });
                 }
@@ -147,17 +149,9 @@ class UserController {
             res.redirect(`/user/${userUpdateStatus}`);
         }
     }
-    static takeNameUser(req, res, next) {
-        let accessToken = req.headers.cookie.cooki_user;
-        jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, (err, decoded) => {
-            if (err) {
-                return res.json({ message: err.message });
-            }
-            else {
-                let name = decoded.username;
-                next();
-            }
-        });
+    static async deleteUser(req, res) {
+        await user_model_1.User.deleteOne({ username: req.params.username });
+        res.redirect('/auth/admin');
     }
 }
 exports.UserController = UserController;
