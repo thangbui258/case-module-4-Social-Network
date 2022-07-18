@@ -5,10 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const messageSchema = new mongoose_1.default.Schema({
-    idSend: String,
-    idReceive: String,
-    time: { type: Date.now() },
-    chat: String
+    nameSend: String,
+    nameReceive: String,
+    chat: String,
+    time: {
+        type: Date,
+        default: Date.now
+    },
 });
 const Message = mongoose_1.default.model("Message", messageSchema);
 exports.default = Message;

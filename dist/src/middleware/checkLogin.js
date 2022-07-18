@@ -13,7 +13,8 @@ class CheckLogin {
         if (user) {
             const comparePass = await bcrypt_1.default.compare(req.body.password, user.password);
             if (!comparePass) {
-                return res.json({ code: 404, message: "password wrong", });
+                return res.render('./user/login', { registerSuccess: 'none',
+                    wrongPassword: 'block' });
             }
             let payload = {
                 user_id: user.id,

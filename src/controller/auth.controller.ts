@@ -22,19 +22,22 @@ export class AuthController {
                 }
             })
         }
-       await res.render('./user/login',{display:"none"})
+       await res.render('./user/login',{registerSuccess:"none",
+                                            wrongPassword:'none'})
     }
 
     static async logout(req, res) {
         res.cookie("cookie_user", '')
-        return res.render('./user/login',{display:'none'})
+        return res.render('./user/login',{registerSuccess:'none',
+                                            wrongPassword:'none'})
     }
 
 
 
     static async register(req, res) {
         if (req.method === 'GET') {
-            return res.render('./user/register',{display:'none'})
+            return res.render('./user/register',{passwordIncorrect:'none',
+                                                   userExist:"none"})
         } else {
             const user = await User.findOne({username: req.body.username});
             if (!user) {
@@ -45,22 +48,30 @@ export class AuthController {
                     let userData = {username: req.body.username, password: passwordHash}
                     const newUser = await User.create(userData);
                     // res.json({user: newUser, code: 200})
-                    return res.render('./user/login',{display:'block'})
+                    return res.render('./user/login',{registerSuccess:'block',
+                        wrongPassword:'none'})
                 } else {
-                    res.render('./user/register',{display:'block'})
+                    res.render('./user/register',{passwordIncorrect:'block',
+                                                   userExist:"none" })
                 }
             } else {
-                res.json({err: "User exited"})
+                res.render('./user/register',{passwordIncorrect:'none',
+                                              userExist:"block"  })
             }
         }
     }
 
+    static async error(req,res) {
+        res.render('./user/error')
+    }
+
     static async grantAdminOrUser(req, res) {
-
-     await User.updateOne({username:req.body.nameUser},{admin:req.body.Admin})
-
-      res.redirect('/auth/admin')
-
+        if(req.body.Admin==='choose'){
+            res.redirect('/auth/admin')
+        }else {
+            await User.updateOne({username:req.body.nameUser},{admin:req.body.Admin})
+            res.redirect('/auth/admin')
+        }
     }
 
     static createTokenAndSetCookie(req, res, payload) {

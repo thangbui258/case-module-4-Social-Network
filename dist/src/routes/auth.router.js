@@ -18,10 +18,11 @@ router.get('/admin/delete/:username', (0, error_1.default)(user_controller_1.Use
 router.get('/logout', (0, error_1.default)(auth_controller_1.AuthController.logout));
 router.get('/register', (0, error_1.default)(auth_controller_1.AuthController.register));
 router.post("/register", (0, error_1.default)(auth_controller_1.AuthController.register));
+router.get("/error", (0, error_1.default)(auth_controller_1.AuthController.error));
 router.post('/admin/grant', (0, error_1.default)(auth_controller_1.AuthController.grantAdminOrUser));
 router.get('/google', passport_1.default.authenticate('google', { scope: ['profile'] }));
-router.get('/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/auth/login' }), async function (req, res) {
-    res.redirect('/auth/home');
+router.get('/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/' }), async function (req, res) {
+    res.redirect('/auth/user');
 });
 exports.default = router;
 //# sourceMappingURL=auth.router.js.map

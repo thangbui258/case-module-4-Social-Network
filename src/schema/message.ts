@@ -3,11 +3,13 @@ import mongoose, {Schema} from "mongoose";
 
 
 const messageSchema = new mongoose.Schema({
-    idSend: String,
-    idReceive: String,
-    time: {type: Date.now()},
-    chat: String
-
+    nameSend: String,
+    nameReceive: String,
+    chat: String ,
+    time: {
+        type: Date,
+        default: Date.now
+    },
 })
 
 const Message = mongoose.model("Message", messageSchema)
