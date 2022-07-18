@@ -2,35 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54263633-8f41-4dd8-8bff-4628947d0962" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controller/auth.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/auth.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schema/message.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schema/messege.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schema/status.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/user/home.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/middleware/authorization.middlleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/authorization.middlleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/middleware/authorization.middlleware.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/authorization.middlleware.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/middleware/passport.google.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/passport.google.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/middleware/passport.google.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/passport.google.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/auth.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/auth.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/auth.router.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/auth.router.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/src/routes/user.router.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/user.router.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/routes/user.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/user.router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/routes/user.router.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/user.router.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/schema/status.model.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/schema/status.model.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tsconfig.build.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tsconfig.build.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.middlleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.middlleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/passport.google.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/passport.google.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/user.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/user.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schema/status.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema/status.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/personal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/personal.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/thang/Code Gym(Ubt)/MD4/Authentication & Authorization 1/thuc-hanh-xd-dang-nhap-PassPort(local)",
+    "last_opened_file_path": "/home/thang/Code Gym(Ubt)/MD4/case2/case-delete/case-module-4-Social-Network",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -95,7 +77,8 @@
       <workItem from="1657725052746" duration="935000" />
       <workItem from="1657727020142" duration="10000" />
       <workItem from="1657727094072" duration="11591000" />
-      <workItem from="1657766201790" duration="10504000" />
+      <workItem from="1657766201790" duration="19282000" />
+      <workItem from="1657847320334" duration="2842000" />
     </task>
     <servers />
   </component>

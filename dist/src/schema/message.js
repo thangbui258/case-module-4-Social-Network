@@ -7,7 +7,10 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const messageSchema = new mongoose_1.default.Schema({
     idSend: String,
     idReceive: String,
-    time: { type: Date.now() },
+    time: {
+        type: Date,
+        default: Date.now
+    },
     chat: String
 });
 const Message = mongoose_1.default.model("Message", messageSchema);

@@ -10,11 +10,15 @@ import errorToSlack from 'express-error-slack'
 import cors from "cors"
 import path from "path";
 import session from "express-session";
+import chatRouter from "./src/routes/chat.router";
+import http from 'http';
+import { Server } from "socket.io";
 
 
 const port =3000;
-
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 //set view engine
 app.set('view engine', 'ejs');
@@ -46,7 +50,15 @@ app.use(passport.session());
 
 //cac router
 app.use("/auth",authRoutes);
-app.use('/user',userRoutes)
+app.use('/user',userRoutes);
+app.use('/chat', chatRouter);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('client-send-message',data =>{
+      io.sockets.emit('server-send-message',data)
+  })
+});
 
 
 
@@ -60,8 +72,9 @@ app.use((err, req, res,next) => {
 })
 
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log("http://localhost:"+port)
 })
+
 
 

@@ -7,10 +7,37 @@ exports.AuthController = void 0;
 const user_model_1 = require("../schema/user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const status_model_1 = require("../schema/status.model");
 class AuthController {
     static async login(req, res) {
+        res.cookie("cookie_user", '');
+        return res.render('./user/login');
+    }
+    static async home(req, res) {
         if (req.method === "GET") {
-            return res.render('./user/login');
+            let data = req.headers.cookie;
+            if (data) {
+                let accessToken = data.split('=')[1];
+                jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
+                    if (err) {
+                        return res.json({ message: err.message });
+                    }
+                    else {
+                        let payload = decoded;
+                        const listUser = await user_model_1.User.find();
+                        const statuses = await status_model_1.Status.find();
+                        let data = {
+                            payload: payload,
+                            statuses: statuses,
+                            listUser: listUser
+                        };
+                        res.render("./user/home", { data: data });
+                    }
+                });
+            }
+            else {
+                res.json({ message: "chua dang nhap" });
+            }
         }
         else {
             const user = await user_model_1.User.findOne({ username: req.body.username });
@@ -29,7 +56,14 @@ class AuthController {
                 if (user.admin === true) {
                 }
                 else {
-                    res.render("./user/home", { user: payload });
+                    const listUser = await user_model_1.User.find();
+                    const statuses = await status_model_1.Status.find();
+                    let data = {
+                        payload: payload,
+                        statuses: statuses,
+                        listUser: listUser
+                    };
+                    res.render("./user/home", { data: data });
                 }
             }
             else {
