@@ -26,15 +26,20 @@ router.get('/logout', wrapperError(AuthController.logout))
 router.get('/register', wrapperError(AuthController.register))
 router.post("/register", wrapperError(AuthController.register));
 
+
+router.get("/error", wrapperError(AuthController.error));
+
+
+
 router.post('/admin/grant',wrapperError(AuthController.grantAdminOrUser))
 
 
 router.get('/google', passport.authenticate('google', {scope: ['profile']}));
-router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/auth/login'}),
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/'}),
     async function (req, res) {
-        // await AuthController.createTokenAndSetCookie(req,res,)
 
-        res.redirect('/auth/home')
+
+        res.redirect('/auth/user')
     });
 
 

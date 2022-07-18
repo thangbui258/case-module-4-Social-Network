@@ -2,6 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54263633-8f41-4dd8-8bff-4628947d0962" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/controller/chat.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/css/style2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/img/bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/chat.router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/user/error.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/case-module-4-Social-Network.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/case-module-4-Social-Network.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js.map" afterDir="false" />
@@ -11,16 +25,25 @@
       <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/controller/user.controller.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/controller/user.controller.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/middleware/checkLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/checkLogin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/middleware/checkLogin.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/middleware/checkLogin.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/routes/auth.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/auth.router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/src/routes/auth.router.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/routes/auth.router.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/schema/message.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/schema/message.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/schema/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/schema/message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/src/schema/message.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/src/schema/message.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tsconfig.build.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tsconfig.build.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/auth.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/checkLogin.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/checkLogin.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/auth.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/auth.router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schema/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema/message.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/user/homeAdmin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/homeAdmin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/homeStart.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/k.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/homeUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/homeUser.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/personalUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/personalUser.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/register.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +53,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -55,7 +79,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/thang/Code Gym(Ubt)/MD3/Socket IO/thuc-hanh-xay-dung-appChat-don-gian&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/haiphu/WebstormProjects/case-module-4-Social-Network/src/views/user&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
@@ -66,12 +91,15 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/views/user" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/views/user" />
+      <recent name="$PROJECT_DIR$/src/public/img" />
+      <recent name="$PROJECT_DIR$/src/public/fonts" />
+      <recent name="$PROJECT_DIR$/src/public/css" />
       <recent name="$PROJECT_DIR$/src/views" />
-      <recent name="$PROJECT_DIR$/src/routes" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -94,7 +122,13 @@
       <workItem from="1657979315517" duration="22123000" />
       <workItem from="1658033669941" duration="1090000" />
       <workItem from="1658034953989" duration="3377000" />
-      <workItem from="1658044607280" duration="3053000" />
+      <workItem from="1658044607280" duration="3666000" />
+      <workItem from="1658063175982" duration="8856000" />
+      <workItem from="1658072095573" duration="4566000" />
+      <workItem from="1658076758436" duration="6883000" />
+      <workItem from="1658106394135" duration="12525000" />
+      <workItem from="1658122549080" duration="15562000" />
+      <workItem from="1658144929793" duration="1879000" />
     </task>
     <servers />
   </component>

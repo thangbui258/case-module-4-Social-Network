@@ -15,18 +15,73 @@ export class UserController {
                     let payload = decoded;
                     const listUser = await User.find({username:{$nin:[`${decoded.username}`]}});
                     const statuses = await Status.find()
+
+
+                  // statuses.forEach(async function (status) {
+                  //    let nameUserStatusHome =await User.find({_id:status.user})
+                  //     // UserStatusHome = await nameUserStatusHome[0].username
+                  //
+                  //     console.log( nameUserStatusHome)
+                  //   })
+
+
+                    // console.log(UserStatusHome)
+
                     let data = {
                         payload: payload,
                         statuses: statuses,
                         listUser: listUser
                     }
+
+
                     res.render("./user/homeUser", {data: data})
                 }
             })
         } else {
+            res.redirect('/auth/error')
+        }
+    }
+
+    static async PersonalUser(req, res) {
+        let Data = req.headers.cookie
+        if (Data) {
+        let accessToken = Data.split('=')[1]
+        jwt.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
+            if (err) {
+                return res.json({message: err.message})
+            } else {
+                let payload = decoded;
+                let idUser = payload.user_id;
+                const name = req.params.username
+                const userSelect = await User.findOne({username:name});
+                const statuses = await Status.find({user: userSelect._id});
+                const listUser = await User.find({username:{$nin:[`${decoded.username}`]}});
+                if(payload.username == req.params.username){
+                    let data = {
+                        name:payload.username,
+                        block:'block',
+                        idUser:idUser,
+                        statuses:statuses,
+                        listUser:listUser
+                    }
+                    res.render('./user/personalUser', {data: data})
+                } else {
+                    let data = {
+                         name:payload.username,
+                        block:'none',
+                        idUser:idUser,
+                        statuses:statuses,
+                        listUser:listUser
+                    }
+                    res.render('./user/personalUser', {data: data})
+                }
+            }
+        })
+        } else {
             res.json({message: "chua dang nhap"})
         }
     }
+
 
     static async homeAdmin(req, res) {
         let data = await req.headers.cookie
@@ -46,52 +101,14 @@ export class UserController {
                         payload: payload,
                         statuses: statuses,
                         listUser: listUser,
-                        nameAdmin:nameAdmin
+                        nameAdmin:nameAdmin,
+                        display:"block"
                     }
                     res.render("./user/homeAdmin", {data: data})
                 }
             })
         } else {
-            res.json({message: "chua dang nhap"})
-        }
-    }
-
-
-    static async PersonalUser(req, res) {
-        let Data = req.headers.cookie
-        if (Data) {
-        let accessToken = Data.split('=')[1]
-        jwt.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
-            if (err) {
-                return res.json({message: err.message})
-            } else {
-                let payload = decoded;
-                let idUser = payload.user_id;
-                const name = req.params.username
-                const userSelect = await User.findOne({username:name});
-                const statuses = await Status.find({user: userSelect._id});
-                const listUser = await User.find({username:{$nin:[`${decoded.username}`]}});
-                if(payload.username == req.params.username){
-                    let data = {
-                        block:'block',
-                        idUser:idUser,
-                        statuses:statuses,
-                        listUser:listUser
-                    }
-                    res.render('./user/personalUser', {data: data})
-                } else {
-                    let data = {
-                        block:'none',
-                        idUser:idUser,
-                        statuses:statuses,
-                        listUser:listUser
-                    }
-                    res.render('./user/personalUser', {data: data})
-                }
-            }
-        })
-        } else {
-            res.json({message: "chua dang nhap"})
+            res.redirect('/auth/error')
         }
     }
 

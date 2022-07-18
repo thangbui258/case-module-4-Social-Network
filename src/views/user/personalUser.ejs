@@ -290,20 +290,27 @@
                                         <button type="submit">them</button>
                                     </p>
                                 </form>
+
+
+
                                 <% for (let i = data.statuses.length - 1;i >= 0;i--){ %>
                                     <div>
                                         <tr>
                                             <%= data.statuses[i].content %>
 
-                       <button class="btn-like" id_status="<%=data.statuses[i]._id%>">
-                       <%=data.statuses[i].like%>
-                       </button>
-                                            <a href="/user/delete/<%= data.statuses[i]._id %>" style="display: <%= data.block %>" >delete</a>
-                                            <a href="/user/update/<%= data.statuses[i]._id %>"  style="display: <%= data.block %>">update</a>
+                                            <button class="btn-like" id_status="<%= data.statuses[i]._id %>">
+                                                <%= data.statuses[i].like %>
+                                            </button>
+                                            <a href="/user/delete/<%= data.statuses[i]._id %>"
+                                               style="display: <%= data.block %>">delete</a>
+                                            <a href="/user/update/<%= data.statuses[i]._id %>"
+                                               style="display: <%= data.block %>">update</a>
                                         </tr>
 
                                     </div>
                                 <% } %>
+
+
                             </div>
                         </div>
                     </div>

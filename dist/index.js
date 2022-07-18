@@ -16,12 +16,14 @@ const express_error_slack_1 = __importDefault(require("express-error-slack"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
+const chat_router_1 = __importDefault(require("./src/routes/chat.router"));
 const port = 3000;
 const app = (0, express_1.default)();
 const http_1 = __importDefault(require("http"));
 const server = http_1.default.createServer(app);
 const socket_io_1 = require("socket.io");
 const status_model_1 = require("./src/schema/status.model");
+const message_1 = __importDefault(require("./src/schema/message"));
 const io = new socket_io_1.Server(server);
 app.set('view engine', 'ejs');
 app.set("views", './src/views');
@@ -46,7 +48,8 @@ app.use(passport_google_1.default.session());
 app.use("/", auth_router_2.default);
 app.use("/auth", auth_router_1.default);
 app.use('/user', user_router_1.default);
-io.on('connection', (socket) => {
+app.use('/chat', chat_router_1.default);
+io.sockets.on('connection', (socket) => {
     socket.on('like', async (Datalike) => {
         await status_model_1.Status.updateOne({ _id: Datalike.idStatus }, { like: (+Datalike.numberLike + 1) });
         let StatusLike = await status_model_1.Status.findOne({ _id: Datalike.idStatus });
@@ -54,6 +57,16 @@ io.on('connection', (socket) => {
             idStatus: Datalike.idStatus,
             numberLike: StatusLike.like
         });
+    });
+    socket.on('chat', async (UserChat) => {
+        console.log(UserChat);
+        let chat = new message_1.default({
+            nameSend: UserChat.nameSend,
+            nameReceive: UserChat.nameReceive,
+            chat: UserChat.message
+        });
+        await chat.save();
+        socket.broadcast.emit('user-chat-with-you', UserChat.message);
     });
 });
 app.use((0, express_error_slack_1.default)({ webhookUri: "https://hooks.slack.com/services/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" }));

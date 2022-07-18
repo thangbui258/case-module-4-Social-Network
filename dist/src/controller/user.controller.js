@@ -30,6 +30,48 @@ class UserController {
             });
         }
         else {
+            res.redirect('/auth/error');
+        }
+    }
+    static async PersonalUser(req, res) {
+        let Data = req.headers.cookie;
+        if (Data) {
+            let accessToken = Data.split('=')[1];
+            jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
+                if (err) {
+                    return res.json({ message: err.message });
+                }
+                else {
+                    let payload = decoded;
+                    let idUser = payload.user_id;
+                    const name = req.params.username;
+                    const userSelect = await user_model_1.User.findOne({ username: name });
+                    const statuses = await status_model_1.Status.find({ user: userSelect._id });
+                    const listUser = await user_model_1.User.find({ username: { $nin: [`${decoded.username}`] } });
+                    if (payload.username == req.params.username) {
+                        let data = {
+                            name: payload.username,
+                            block: 'block',
+                            idUser: idUser,
+                            statuses: statuses,
+                            listUser: listUser
+                        };
+                        res.render('./user/personalUser', { data: data });
+                    }
+                    else {
+                        let data = {
+                            name: payload.username,
+                            block: 'none',
+                            idUser: idUser,
+                            statuses: statuses,
+                            listUser: listUser
+                        };
+                        res.render('./user/personalUser', { data: data });
+                    }
+                }
+            });
+        }
+        else {
             res.json({ message: "chua dang nhap" });
         }
     }
@@ -50,54 +92,15 @@ class UserController {
                         payload: payload,
                         statuses: statuses,
                         listUser: listUser,
-                        nameAdmin: nameAdmin
+                        nameAdmin: nameAdmin,
+                        display: "block"
                     };
                     res.render("./user/homeAdmin", { data: data });
                 }
             });
         }
         else {
-            res.json({ message: "chua dang nhap" });
-        }
-    }
-    static async PersonalUser(req, res) {
-        let Data = req.headers.cookie;
-        if (Data) {
-            let accessToken = Data.split('=')[1];
-            jsonwebtoken_1.default.verify(accessToken, process.env.NUMBER_SECRET_TOKEN, async (err, decoded) => {
-                if (err) {
-                    return res.json({ message: err.message });
-                }
-                else {
-                    let payload = decoded;
-                    let idUser = payload.user_id;
-                    const name = req.params.username;
-                    const userSelect = await user_model_1.User.findOne({ username: name });
-                    const statuses = await status_model_1.Status.find({ user: userSelect._id });
-                    const listUser = await user_model_1.User.find({ username: { $nin: [`${decoded.username}`] } });
-                    if (payload.username == req.params.username) {
-                        let data = {
-                            block: 'block',
-                            idUser: idUser,
-                            statuses: statuses,
-                            listUser: listUser
-                        };
-                        res.render('./user/personalUser', { data: data });
-                    }
-                    else {
-                        let data = {
-                            block: 'none',
-                            idUser: idUser,
-                            statuses: statuses,
-                            listUser: listUser
-                        };
-                        res.render('./user/personalUser', { data: data });
-                    }
-                }
-            });
-        }
-        else {
-            res.json({ message: "chua dang nhap" });
+            res.redirect('/auth/error');
         }
     }
     static async addStatusInPersonal(req, res) {

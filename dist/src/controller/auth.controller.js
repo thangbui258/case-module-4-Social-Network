@@ -26,15 +26,18 @@ class AuthController {
                 }
             });
         }
-        await res.render('./user/login', { display: "none" });
+        await res.render('./user/login', { registerSuccess: "none",
+            wrongPassword: 'none' });
     }
     static async logout(req, res) {
         res.cookie("cookie_user", '');
-        return res.render('./user/login', { display: 'none' });
+        return res.render('./user/login', { registerSuccess: 'none',
+            wrongPassword: 'none' });
     }
     static async register(req, res) {
         if (req.method === 'GET') {
-            return res.render('./user/register', { display: 'none' });
+            return res.render('./user/register', { passwordIncorrect: 'none',
+                userExist: "none" });
         }
         else {
             const user = await user_model_1.User.findOne({ username: req.body.username });
@@ -44,20 +47,31 @@ class AuthController {
                     const passwordHash = await bcrypt_1.default.hash(req.body.password[0], 10);
                     let userData = { username: req.body.username, password: passwordHash };
                     const newUser = await user_model_1.User.create(userData);
-                    return res.render('./user/login', { display: 'block' });
+                    return res.render('./user/login', { registerSuccess: 'block',
+                        wrongPassword: 'none' });
                 }
                 else {
-                    res.render('./user/register', { display: 'block' });
+                    res.render('./user/register', { passwordIncorrect: 'block',
+                        userExist: "none" });
                 }
             }
             else {
-                res.json({ err: "User exited" });
+                res.render('./user/register', { passwordIncorrect: 'none',
+                    userExist: "block" });
             }
         }
     }
+    static async error(req, res) {
+        res.render('./user/error');
+    }
     static async grantAdminOrUser(req, res) {
-        await user_model_1.User.updateOne({ username: req.body.nameUser }, { admin: req.body.Admin });
-        res.redirect('/auth/admin');
+        if (req.body.Admin === 'choose') {
+            res.redirect('/auth/admin');
+        }
+        else {
+            await user_model_1.User.updateOne({ username: req.body.nameUser }, { admin: req.body.Admin });
+            res.redirect('/auth/admin');
+        }
     }
     static createTokenAndSetCookie(req, res, payload) {
         const token = jsonwebtoken_1.default.sign(payload, process.env.NUMBER_SECRET_TOKEN, { expiresIn: 9999 });
