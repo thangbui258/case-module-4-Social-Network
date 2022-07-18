@@ -14,11 +14,11 @@ const userSchema = new mongoose_1.default.Schema({
     password: {
         type: String,
         default: 0,
-        required: true
+        required: false
     },
     admin: {
         type: Boolean,
-        default: false
+        default: true
     },
     google_id: {
         type: String,
