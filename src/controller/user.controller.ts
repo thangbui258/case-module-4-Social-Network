@@ -94,7 +94,11 @@ export class UserController {
                     let payload = decoded;
                     const nameAdmin=payload.username
 
-                    const listUser = await User.find({username:{$nin:[`${decoded.username}`]}});
+                    //chon ra tat ca user tru chu kenh admin  va tru ra cac admin khac
+                    const listUser = await User.find({
+                        $and: [{username:{$nin:[`${decoded.username}`]}},{admin:false}]
+                });
+
 
                     const statuses = await Status.find()
                     let data = {

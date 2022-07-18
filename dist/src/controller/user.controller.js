@@ -86,7 +86,9 @@ class UserController {
                 else {
                     let payload = decoded;
                     const nameAdmin = payload.username;
-                    const listUser = await user_model_1.User.find({ username: { $nin: [`${decoded.username}`] } });
+                    const listUser = await user_model_1.User.find({
+                        $and: [{ username: { $nin: [`${decoded.username}`] } }, { admin: false }]
+                    });
                     const statuses = await status_model_1.Status.find();
                     let data = {
                         payload: payload,
